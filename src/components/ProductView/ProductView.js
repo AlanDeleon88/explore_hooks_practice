@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductListItem from "../ProductListItem";
 import ProductDetails from "../ProductDetails";
 import "./ProductView.css";
@@ -6,10 +6,27 @@ import { useState } from "react";
 
 function ProductView({ products }) {
   // TODO: Replace with state variable
-  const [sideOpen, setSideOpen] = useState(true);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [sideOpen, setSideOpen] = useState(localStorage.getItem('sideOpen'));
+  const [selectedProduct, setSelectedProduct] = useState(false);
 
+  useEffect(() =>{
+    console.log(`selectedProduct CHANGE TO`, selectedProduct);
 
+    if(selectedProduct){
+      setSideOpen(true);
+
+    }
+
+  }, [selectedProduct]);
+
+  useEffect(() =>{
+    console.log(`sideOpen CHANGED TO`, sideOpen);
+    if(!sideOpen){
+
+      setSelectedProduct(false);
+    }
+  },[sideOpen])
+  console.log('product view')
   return (
     <div className="product-view">
       <div className="product-main-area">
@@ -32,7 +49,10 @@ function ProductView({ products }) {
         <div className="product-side-panel-toggle-wrapper">
           <div
             className="product-side-panel-toggle"
-            onClick={() => setSideOpen(!sideOpen)}
+            onClick={() => {
+              setSideOpen(!sideOpen)
+              sideOpen ? localStorage.setItem('sideOpen', '') : localStorage.setItem('sideOpen', 'true');
+            }}
           >
             {sideOpen ? ">" : "<"}
           </div>

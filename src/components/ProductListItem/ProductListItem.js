@@ -4,7 +4,7 @@ function ProductListItem({ product, isSelected, onClick }) {
 
 
 
-
+    console.log('product-list-item')
     return (
         <div className={`product-list-item ${isSelected ? ' selected' : ''}`}>
             <img className="product-list-item-photo"
